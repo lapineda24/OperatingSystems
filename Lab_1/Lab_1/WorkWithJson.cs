@@ -43,19 +43,35 @@ namespace Lab_1
     }
     static async Task СonservationJson(string path)
     {
-      using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+      FileInfo fileInfFile = new FileInfo(path);
+      if (!fileInfFile.Exists)
       {
-        Book tom = new Book() { Title = "Тень ветра", Author = "Карлос Руис Сафон", Price = 75 };
-        await JsonSerializer.SerializeAsync<Book>(fs, tom);
-        Console.WriteLine("Data has been saved to file");
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+          Book tom = new Book() { Title = "Тень ветра", Author = "Карлос Руис Сафон", Price = 75 };
+          await JsonSerializer.SerializeAsync<Book>(fs, tom);
+          Console.WriteLine("Запись сохранена в файле");
+        }
+      }
+      else
+      {
+        Console.WriteLine("Файл с данным именем не найден");
       }
     }
     static async Task ReadJson(string path)
     {
-      using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+      FileInfo fileInfFile = new FileInfo(path);
+      if (!fileInfFile.Exists)
       {
-        Book restoredPerson = await JsonSerializer.DeserializeAsync<Book>(fs);
-        Console.WriteLine($"Название: {restoredPerson.Title}  Автор: {restoredPerson.Author} Цена: {restoredPerson.Price} ");
+        using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+        {
+          Book restoredPerson = await JsonSerializer.DeserializeAsync<Book>(fs);
+          Console.WriteLine($"Название: {restoredPerson.Title}  Автор: {restoredPerson.Author} Цена: {restoredPerson.Price} ");
+        }
+      }
+      else
+      {
+        Console.WriteLine("Файл с данным именем не найден");
       }
     }
     static void DeleteJson(string path)
@@ -72,13 +88,13 @@ namespace Lab_1
           {
             fs.Close();
             File.Delete(path);
-            Console.WriteLine("The file was deleted");
+            Console.WriteLine("Файл удален");
           }
         }
       }
       else
       {
-        Console.WriteLine("File with this name was not found");
+        Console.WriteLine("Файл с данным именем не найден");
       }
     }
   }

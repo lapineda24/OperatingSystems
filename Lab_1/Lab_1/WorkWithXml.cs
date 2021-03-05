@@ -42,59 +42,76 @@ namespace Lab_1
     }
     static void InputUser(string path)
     {
-      User user1 = new User();
-      Console.WriteLine("Введите имя ");
-      user1.Name = Console.ReadLine();
-      Console.WriteLine("Введите возраст ");
-      user1.Age = Convert.ToInt32(Console.ReadLine());
-      Console.WriteLine("Введите название компании ");
-      user1.Company = Console.ReadLine();
-      XmlDocument xDoc = new XmlDocument();
-      xDoc.Load(path);
-      XmlElement xRoot = xDoc.DocumentElement;
-      XmlElement userElem = xDoc.CreateElement("user");
-      XmlAttribute nameAttr = xDoc.CreateAttribute("name");
-      XmlElement companyElem = xDoc.CreateElement("company");
-      XmlElement ageElem = xDoc.CreateElement("age");
-      XmlText nameText = xDoc.CreateTextNode(user1.Name);
-      XmlText companyText = xDoc.CreateTextNode(user1.Company);
-      XmlText ageText = xDoc.CreateTextNode(user1.Age.ToString());
-      nameAttr.AppendChild(nameText);
-      companyElem.AppendChild(companyText);
-      ageElem.AppendChild(ageText);
-      userElem.Attributes.Append(nameAttr);
-      userElem.AppendChild(companyElem);
-      userElem.AppendChild(ageElem);
-      xRoot.AppendChild(userElem);
-      xDoc.Save(path);
+      FileInfo fileInfFile = new FileInfo(path);
+      if (!fileInfFile.Exists)
+      {
+        User user1 = new User();
+        Console.WriteLine("Введите имя ");
+        user1.Name = Console.ReadLine();
+        Console.WriteLine("Введите возраст ");
+        user1.Age = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите название компании ");
+        user1.Company = Console.ReadLine();
+        XmlDocument xDoc = new XmlDocument();
+        xDoc.Load(path);
+        XmlElement xRoot = xDoc.DocumentElement;
+        XmlElement userElem = xDoc.CreateElement("user");
+        XmlAttribute nameAttr = xDoc.CreateAttribute("name");
+        XmlElement companyElem = xDoc.CreateElement("company");
+        XmlElement ageElem = xDoc.CreateElement("age");
+        XmlText nameText = xDoc.CreateTextNode(user1.Name);
+        XmlText companyText = xDoc.CreateTextNode(user1.Company);
+        XmlText ageText = xDoc.CreateTextNode(user1.Age.ToString());
+        nameAttr.AppendChild(nameText);
+        companyElem.AppendChild(companyText);
+        ageElem.AppendChild(ageText);
+        userElem.Attributes.Append(nameAttr);
+        userElem.AppendChild(companyElem);
+        userElem.AppendChild(ageElem);
+        xRoot.AppendChild(userElem);
+        xDoc.Save(path);
+        Console.WriteLine("Запись сохранена");
+      }
+      else
+      {
+        Console.WriteLine("Файл с данным именем не найден");
+      }
     }
     static void ReadXml(string path)
     {
-      XmlDocument xDoc = new XmlDocument();
-      xDoc.Load(path);
-      XmlElement xRoot = xDoc.DocumentElement;
-      foreach (XmlNode xnode in xRoot)
+      FileInfo fileInfFile = new FileInfo(path);
+      if (!fileInfFile.Exists)
       {
-        if (xnode.Attributes.Count > 0)
+        XmlDocument xDoc = new XmlDocument();
+        xDoc.Load(path);
+        XmlElement xRoot = xDoc.DocumentElement;
+        foreach (XmlNode xnode in xRoot)
         {
-          XmlNode attr = xnode.Attributes.GetNamedItem("name");
-          if (attr != null)
-            Console.WriteLine(attr.Value);
-        }
-        foreach (XmlNode childnode in xnode.ChildNodes)
-        {
-          if (childnode.Name == "company")
+          if (xnode.Attributes.Count > 0)
           {
-            Console.WriteLine($"Компания: {childnode.InnerText}");
+            XmlNode attr = xnode.Attributes.GetNamedItem("name");
+            if (attr != null)
+              Console.WriteLine(attr.Value);
           }
-          if (childnode.Name == "age")
+          foreach (XmlNode childnode in xnode.ChildNodes)
           {
-            Console.WriteLine($"Возраст: {childnode.InnerText}");
+            if (childnode.Name == "company")
+            {
+              Console.WriteLine($"Компания: {childnode.InnerText}");
+            }
+            if (childnode.Name == "age")
+            {
+              Console.WriteLine($"Возраст: {childnode.InnerText}");
+            }
           }
+          Console.WriteLine();
         }
-        Console.WriteLine();
+        Console.Read();
       }
-      Console.Read();
+      else
+      {
+        Console.WriteLine("Файл с данным именем не найден");
+      }
     }
     static void DeleteXml(string path)
     {

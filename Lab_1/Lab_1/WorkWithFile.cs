@@ -74,6 +74,7 @@ namespace Lab_1
         using (StreamWriter sw = new StreamWriter($"{path}\\{FileName}.txt", false, System.Text.Encoding.Default))
         {
           sw.WriteLine(text);
+          Console.WriteLine("Запись сохранена в файле");
         }
       }
     }

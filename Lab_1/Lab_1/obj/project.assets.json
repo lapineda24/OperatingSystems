@@ -57,11 +57,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lapin\\source\\repos\\Lab_1\\Lab_1\\Lab_1.csproj",
+      "projectUniqueName": "C:\\Users\\lapin\\source\\repos\\OperatingSystems\\Lab_1\\Lab_1\\Lab_1.csproj",
       "projectName": "Lab_1",
-      "projectPath": "C:\\Users\\lapin\\source\\repos\\Lab_1\\Lab_1\\Lab_1.csproj",
+      "projectPath": "C:\\Users\\lapin\\source\\repos\\OperatingSystems\\Lab_1\\Lab_1\\Lab_1.csproj",
       "packagesPath": "C:\\Users\\lapin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lapin\\source\\repos\\Lab_1\\Lab_1\\obj\\",
+      "outputPath": "C:\\Users\\lapin\\source\\repos\\OperatingSystems\\Lab_1\\Lab_1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\lapin\\AppData\\Roaming\\NuGet\\NuGet.Config",
