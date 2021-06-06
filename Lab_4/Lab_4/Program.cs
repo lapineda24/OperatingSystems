@@ -9,13 +9,11 @@ namespace Lab_4
 {
   class Program
   {
-    public static Queue<Thread> Threads;
     public static Thread Thread1;
     public static Thread Thread2;
     public static Thread Thread3;
     public static Stopwatch stopWatch;
     public static bool CheckBottom;
-    public static bool Finish;
     static object locker = new object();
     static char[] alfabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
     static void Main(string[] args)
