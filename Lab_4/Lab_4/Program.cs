@@ -19,7 +19,6 @@ namespace Lab_4
     static void Main(string[] args)
     {
       CheckBottom = true;
-      Finish = false;
       stopWatch = new Stopwatch();
       stopWatch.Start();
       Thread1 = new Thread(FindWords);
@@ -44,14 +43,12 @@ namespace Lab_4
               {
                 for (int letter3 = 0; letter3 < 26; letter3++)
                 {
-                  for (int letter4 = 0; letter4 < 26; letter4++)
-                  {
-                    
+                
                      if (stopWatch.ElapsedMilliseconds < 5000)
                      {
                         if (CheckBottom)
                         {
-                          str = String.Concat(alfabet[letter1], alfabet[letter2], alfabet[letter3], alfabet[letter4]);
+                          str = String.Concat(alfabet[letter1], alfabet[letter2], alfabet[letter3]);
                           Console.WriteLine(str);
                           str = "";
                         }
@@ -64,11 +61,10 @@ namespace Lab_4
                           Monitor.Pulse(locker);
                           Monitor.Wait(locker);
                      }
-                  }
                 }
               }
           }
-          Console.WriteLine("Конец поиска слов из 4 букв");
+          Console.WriteLine("Конец поиска слов из 3 букв");
           Monitor.Pulse(locker);
         }
     }
@@ -79,7 +75,7 @@ namespace Lab_4
       lock (locker)
       {
         bool check = true;
-        for (int i = 1; i < 50000; i++)
+        for (int i = 1; i < 9000; i++)
         {
 
           for (int j = 1; j < i - 1; j++)
@@ -95,10 +91,11 @@ namespace Lab_4
             }
             else 
             {
-              Console.WriteLine("Приостановка работы потока по поиску простых чисел. Время, затраченное на работу: " + Convert.ToString(stopWatch.ElapsedMilliseconds));
-              stopWatch.Restart();
-              Monitor.Pulse(locker);
-              Monitor.Wait(locker);
+                Console.WriteLine("Приостановка работы потока по поиску простых чисел. Время, затраченное на работу: " + Convert.ToString(stopWatch.ElapsedMilliseconds));
+                stopWatch.Restart();
+                Monitor.Pulse(locker);
+                Monitor.Wait(locker);
+              
             }    
           }
           if (check) Console.WriteLine(Convert.ToString(i));
@@ -124,6 +121,7 @@ namespace Lab_4
               if (CheckBottom)
               {
                 sum += (i * 3) * (i + 1) - (i * i);
+                Console.WriteLine(Convert.ToString(sum));
               }
               else { Thread.Sleep(1000); }
             }

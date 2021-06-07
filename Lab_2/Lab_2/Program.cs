@@ -107,7 +107,12 @@ namespace Lab_2
               for (int letter5 = 0; letter5 < 26; letter5++)
               {
                 str = String.Concat(alfabet[(int)i], alfabet[letter2], alfabet[letter3], alfabet[letter4], alfabet[letter5]);
+              TryAgain:
+              try
+              {
                 words.Add(str);
+              }
+              catch (ArgumentException) { goto TryAgain; }
                 str = "";
               }
             }

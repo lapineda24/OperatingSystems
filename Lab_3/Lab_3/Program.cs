@@ -38,9 +38,12 @@ namespace Lab_3
     {
       while(CheckBottom)
       {
-
           CheckManufacturer();
       }
+      if((!Manufacturer1.IsAlive && !Manufacturer2.IsAlive) ||
+        (!Manufacturer1.IsAlive && !Manufacturer3.IsAlive) ||
+        (!Manufacturer3.IsAlive && !Manufacturer2.IsAlive))
+        Console.WriteLine("Производители закончили работу");
     }
 
     public static void TakeElements()
@@ -49,38 +52,47 @@ namespace Lab_3
       {
         CheckConsumer();
       }
+      if(!Consumer1.IsAlive || !Consumer2.IsAlive) Console.WriteLine("Потребители закончили работу");
     }
 
     public static void CheckManufacturer()
     {
-      if(number.Count > 101)
+      if (number.Count > 101)
       {
         Console.WriteLine("Производители засыпают. Количество элементов в очереди: " + Convert.ToString(number.Count));
         Thread.Sleep(10);
       }
-      if ( number.Count < 80 )
+      else
       {
-        Console.WriteLine("Производители просыпаются. Количество элементов в очереди: " + Convert.ToString(number.Count));
         number.Enqueue(rnd.Next(1, 100));
+        if (number.Count > 80 && number.Count < 84)
+        {
+          Console.WriteLine("Производители просыпаются. Количество элементов в очереди: " + Convert.ToString(number.Count));
+
+        }
       }
     }
 
     public static void CheckConsumer()
     {
 
-      if(number.Count == 0)
+      if (number.Count == 0)
       {
         Console.WriteLine("Потребители засыпают. Количество элементов в очереди: " + Convert.ToString(number.Count));
-        Thread.Sleep(10);
+        Thread.Sleep(100);
       }
-      if( number.Count > 0 && number.Count < 3)
+      else
       {
-        Console.WriteLine("Потребители просыпаются. Количество элементов в очереди: " + Convert.ToString(number.Count));
         try
+          {
+            number.Dequeue();
+          }
+          catch (InvalidOperationException) { }
+        if (number.Count > 0 && number.Count < 3)
         {
-          number.Dequeue();
+          Console.WriteLine("Потребители просыпаются. Количество элементов в очереди: " + Convert.ToString(number.Count));
+          
         }
-        catch (InvalidOperationException) { }
       }
     }
 
