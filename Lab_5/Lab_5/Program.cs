@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 
+//Сегментация памяти
+
 namespace Lab_5
 {
   class Program
@@ -122,7 +124,7 @@ namespace Lab_5
       bool Create = false;
       for(int i = 0; i <  Segments.Count; i++)
       {
-        if(Segments[i].ProgramName == null && Segments[i - 1].ProgramName != programName)
+        if(Segments[i].ProgramName == null && Segments[i - 1].ProgramName != programName) //проверка пустых сегментов на вожможность заполнения
         {
           var Copy = Segments[i];
           Copy.ProgramName = programName;

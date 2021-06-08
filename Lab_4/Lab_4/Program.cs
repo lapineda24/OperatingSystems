@@ -44,10 +44,10 @@ namespace Lab_4
                 for (int letter3 = 0; letter3 < 26; letter3++)
                 {
                 
-                     if (stopWatch.ElapsedMilliseconds < 5000)
-                     {
-                        if (CheckBottom)
-                        {
+                     if (stopWatch.ElapsedMilliseconds < 5000) // проверка времени
+              {
+                        if (CheckBottom) // проверка была ли нажата Q
+                {
                           str = String.Concat(alfabet[letter1], alfabet[letter2], alfabet[letter3]);
                           Console.WriteLine(str);
                           str = "";
@@ -57,10 +57,10 @@ namespace Lab_4
                      else
                      {
                         Console.WriteLine("Приостановка работы потока по поиску слов. Время, затраченное на работу: " + Convert.ToString(stopWatch.ElapsedMilliseconds));
-                          stopWatch.Restart();
-                          Monitor.Pulse(locker);
-                          Monitor.Wait(locker);
-                     }
+                          stopWatch.Restart(); // обнуление счетчика для другого потока
+                          Monitor.Pulse(locker); // блокировка текущего потока
+                          Monitor.Wait(locker); //режим  ожидание, пока другой поток не закончит работу или не перейдет в режим ожидания
+              }
                 }
               }
           }
@@ -72,7 +72,7 @@ namespace Lab_4
     public static void FindPrimeNumbers()
     {
 
-      lock (locker)
+      lock (locker) 
       {
         bool check = true;
         for (int i = 1; i < 9000; i++)
@@ -80,9 +80,9 @@ namespace Lab_4
 
           for (int j = 1; j < i - 1; j++)
           {
-            if (stopWatch.ElapsedMilliseconds < 5000)
+            if (stopWatch.ElapsedMilliseconds < 5000) // проверка времени
             {
-              if (CheckBottom)
+              if (CheckBottom) // проверка была ли нажата Q
               {
                 if (i % j == 0 && j != 1) check = false;
                 
@@ -92,9 +92,9 @@ namespace Lab_4
             else 
             {
                 Console.WriteLine("Приостановка работы потока по поиску простых чисел. Время, затраченное на работу: " + Convert.ToString(stopWatch.ElapsedMilliseconds));
-                stopWatch.Restart();
-                Monitor.Pulse(locker);
-                Monitor.Wait(locker);
+                stopWatch.Restart(); // обнуление счетчика для другого потока
+                Monitor.Pulse(locker); // блокировка текущего потока
+                Monitor.Wait(locker); //режим  ожидание, пока другой поток не закончит работу или не перейдет в режим ожидания
               
             }    
           }
@@ -111,14 +111,14 @@ namespace Lab_4
       lock (locker)
       {
         int sum = 0;
-        if (stopWatch.ElapsedMilliseconds < 5000)
+        if (stopWatch.ElapsedMilliseconds < 5000) // проверка времени
         {
           
           for (int i = 0; i < 1000; i++)
           {
             if (stopWatch.ElapsedMilliseconds < 5000) 
             {
-              if (CheckBottom)
+              if (CheckBottom) // проверка была ли нажата Q
               {
                 sum += (i * 3) * (i + 1) - (i * i);
                 Console.WriteLine(Convert.ToString(sum));
@@ -128,20 +128,20 @@ namespace Lab_4
             else
             {
               Console.WriteLine("Приостановка работы потока по поиску суммы ряда. Время, затраченное на работу: " + Convert.ToString(stopWatch.ElapsedMilliseconds));
-              stopWatch.Restart();
-              Monitor.Pulse(locker);
-              Monitor.Wait(locker);
+              stopWatch.Restart(); // обнуление счетчика для другого потока
+              Monitor.Pulse(locker); // блокировка текущего потока
+              Monitor.Wait(locker); //режим  ожидание, пока другой поток не закончит работу или не перейдет в режим ожидания
             }
           }
         }
         Console.WriteLine("Конец поиска суммы ряда");
-        Monitor.Pulse(locker);
+        Monitor.Pulse(locker); 
       }
     }
 
     public static void Wait()
     {
-      while(Thread1.IsAlive || Thread2.IsAlive || Thread3.IsAlive)
+      while(Thread1.IsAlive || Thread2.IsAlive || Thread3.IsAlive) // работает пока работают три основных потока 
       {
         ConsoleKeyInfo cki = new ConsoleKeyInfo();
         if (Console.KeyAvailable == true)
